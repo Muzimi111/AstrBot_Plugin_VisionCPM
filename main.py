@@ -21,7 +21,7 @@ class VisionCPM(Star):
         """调用本地 Ollama 进行图像识别"""
         payload = {
             "model": MINICPM_MODEL_NAME,
-            "prompt": "请用简短的一句话描述这张图片的内容，越详细越好，不要有废话。",
+            "prompt": "请识别图中的核心物品、文字或环境特征，用 50 字以内的关键词描述。",
             "images": [base64_image],
             "stream": False
         }
