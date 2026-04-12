@@ -80,10 +80,9 @@ class VisionCPM(Star):
             "如果西片在显摆或者学习，记得给他一点‘意外的评价’。"
             )
             
-            # 将旁白附加到当前的 ProviderRequest 中
-            if req.system_prompt:
-                req.system_prompt += vision_context
-            else:
-                req.system_prompt = vision_context
+            # 注入到请求中
+        if req.system_prompt:
+            # 将视觉信息置于系统提示词的最顶部，优先级最高
+            req.system_prompt = vision_context + req.system_prompt
                 
             logger.info("💉 视觉信息已成功注入到 Qwen 的潜意识 (System Prompt) 中！")
