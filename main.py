@@ -81,8 +81,10 @@ class VisionCPM(Star):
             )
             
             # 注入到请求中
-        if req.system_prompt:
-            # 将视觉信息置于系统提示词的最顶部，优先级最高
-            req.system_prompt = vision_context + req.system_prompt
-                
+            if req.system_prompt:
+                # 将视觉信息置于系统提示词的最顶部，优先级最高
+                req.system_prompt = vision_context + req.system_prompt
+            else:
+                req.system_prompt = vision_context
+
             logger.info("💉 视觉信息已成功注入到 Qwen 的潜意识 (System Prompt) 中！")
