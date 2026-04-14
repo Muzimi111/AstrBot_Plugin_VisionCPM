@@ -21,7 +21,7 @@ class VisionCPM(Star):
         """调用本地 Ollama 进行图像识别"""
         payload = {
             "model": MINICPM_MODEL_NAME,
-            "prompt": "你是一个客观的旁观者。请直接描述画面中最核心的物品或人物动作。严禁使用“这幅图展示了”、“表明了”等主观推断词汇。直接输出名词和动词。",
+            "prompt": "请用一句简短、口语化的纯中文描述这张图片里最核心的物品或动作。不要使用任何专业术语，只输出动词和名词。",
             "images": [base64_image],
             "stream": False
         }
@@ -86,6 +86,7 @@ class VisionCPM(Star):
             else:
                 req.prompt = vision_context
 
-            req.image_urls.clear()  # 清空原有图片 URL，避免重复处理
+            req.image_urls.clear() # 清空原有图片 URL，避免重复处理
+            logger.info(req.image_urls, "已清空原有图片 URL，防止重复处理。")
 
             logger.info("💉 视觉信息已成功注入到 Qwen 的潜意识 (Prompt) 中！")
