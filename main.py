@@ -21,7 +21,7 @@ class VisionCPM(Star):
         """调用本地 Ollama 进行图像识别"""
         payload = {
             "model": MINICPM_MODEL_NAME,
-            "prompt": "请用一句简短、口语化的纯中文描述这张图片里最核心的物品或动作。不要使用任何专业术语，就像普通初中生看到的画面一样。",
+            "prompt": "你是一个客观的旁观者。请直接描述画面中最核心的物品或人物动作。严禁使用“这幅图展示了”、“表明了”等主观推断词汇。直接输出名词和动词。",
             "images": [base64_image],
             "stream": False
         }
@@ -75,15 +75,15 @@ class VisionCPM(Star):
             
             # 构建“舞台旁白”
             vision_context = (
-            f"\n【视觉描述】\n你（高木）刚才眯起眼睛看了一眼西片发来的照片，发现里面有：{all_desc}。\n<【视觉描述】\n"
-            "【关键指令】：不要复述视觉描述里的文字。请结合这些细节，用你那调皮、捉弄人的语气跟西片聊天。"
+            f"\n高木同学，你看到了：{all_desc}。\n<【视觉描述】\n"
+            
             )
             
             # 注入到请求中
-            if req.system_prompt:
-                # 将视觉信息置于系统提示词的最顶部，优先级最高
-                req.system_prompt = vision_context + req.system_prompt
+            if req.prompt:
+                # 将视觉信息置于用户提示词，置于系统提示词占上下文
+                req.prompt = vision_context + req.prompt
             else:
-                req.system_prompt = vision_context
+                req.prompt = vision_context
 
-            logger.info("💉 视觉信息已成功注入到 Qwen 的潜意识 (System Prompt) 中！")
+            logger.info("💉 视觉信息已成功注入到 Qwen 的潜意识 (Prompt) 中！")
