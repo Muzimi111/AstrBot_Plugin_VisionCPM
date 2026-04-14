@@ -75,7 +75,7 @@ class VisionCPM(Star):
             
             # 构建“舞台旁白”
             vision_context = (
-            f"\n高木同学，你看到了：{all_desc}。\n<【视觉描述】\n"
+            f"高木同学，你刚才看到了：{all_desc}。\n"
             
             )
             
@@ -85,5 +85,7 @@ class VisionCPM(Star):
                 req.prompt = vision_context + req.prompt
             else:
                 req.prompt = vision_context
+
+            req.image_urls.clear()  # 清空原有图片 URL，避免重复处理
 
             logger.info("💉 视觉信息已成功注入到 Qwen 的潜意识 (Prompt) 中！")
