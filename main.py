@@ -87,6 +87,6 @@ class VisionCPM(Star):
                 req.prompt = vision_context
 
             req.image_urls.clear() # 清空原有图片 URL，避免重复处理
-            logger.info(req.image_urls, "已清空原有图片 URL，防止重复处理。")
+            logger.info(f"已清空原有图片 URL，防止重复处理。当前列表: {req.image_urls}")
 
             logger.info("💉 视觉信息已成功注入到 Qwen 的潜意识 (Prompt) 中！")
